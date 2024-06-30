@@ -9,7 +9,7 @@ class Tax {
     public $tax_rate;
 
     public function getAll() {
-        $sql = " SELECT * FROM tb_taxes ";
+        $sql = " SELECT * FROM tb_taxes ORDER BY id DESC";
 
         $stmt = Model::getConn()->prepare($sql);
         $stmt->execute();
