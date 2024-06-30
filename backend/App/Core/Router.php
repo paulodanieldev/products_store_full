@@ -30,7 +30,7 @@ class Router {
             $this->controller = "clientes";
         } else {
             http_response_code(404);
-            echo json_encode(["erro" => "Rote not found"]);
+            echo json_encode(["erro" => "Route not found"]);
             exit;
         }
 
