@@ -2,16 +2,16 @@
 
 use App\Core\Controller;
 
-class Products extends Controller {
+class Sales extends Controller {
 
     public function index() {
-        $model = $this->model("Product");
+        $model = $this->model("Sale");
         $data = $model->getAll();
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
     public function find($id) {
-        $model = $this->model("Product");
+        $model = $this->model("Sale");
         $data = $model->find($id);
 
         if ($data) {
@@ -26,12 +26,8 @@ class Products extends Controller {
         $errors = [];
         $errorFields = [];
 
-        if (!isset($fields->name) || empty($fields->name))
-            $errorFields[] = "name";
-        if (!isset($fields->price) || empty($fields->price))
-            $errorFields[] = "price";
-        if (!isset($fields->product_type_id) || empty($fields->product_type_id))
-            $errorFields[] = "product_type_id";
+        if (!isset($fields->total) || empty($fields->total))
+            $errorFields[] = "total";
 
         if(count($errorFields) > 0){
             http_response_code(400);
@@ -57,10 +53,10 @@ class Products extends Controller {
             exit();
         }
 
-        $model = $this->model("Product");
-        $model->name = $insertFields->name;
-        $model->price = $insertFields->price;
-        $model->product_type_id = $insertFields->product_type_id;
+        $model = $this->model("Sale");
+        $model->sale_date = date("Y-m-d H:i:s");
+        $model->total = $insertFields->total;
+        $model->total_tax = $insertFields->total_tax ?? 0;
 
         if($model->store()){
             http_response_code(201);
@@ -77,7 +73,7 @@ class Products extends Controller {
 
         $updateFields = json_decode($json);
 
-        $model = $this->model("Product");
+        $model = $this->model("Sale");
 
         if(!$model->find($id)){
             http_response_code(404);
@@ -86,9 +82,8 @@ class Products extends Controller {
         }
             
         $model->id = $id;
-        $model->name = $updateFields->name;
-        $model->price = $updateFields->price;
-        $model->product_type_id = $updateFields->product_type_id;
+        $model->total = $updateFields->total;
+        $model->total_tax = $updateFields->total_tax ?? 0;
 
         if($model->update()){
             http_response_code(200);
@@ -100,7 +95,7 @@ class Products extends Controller {
     }
 
     public function delete($id){
-        $model = $this->model("Product");
+        $model = $this->model("Sale");
 
         if(!$model->find($id)){
             http_response_code(404);

@@ -2,16 +2,16 @@
 
 use App\Core\Controller;
 
-class Products extends Controller {
+class Taxes extends Controller {
 
     public function index() {
-        $model = $this->model("Product");
+        $model = $this->model("Tax");
         $data = $model->getAll();
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
     public function find($id) {
-        $model = $this->model("Product");
+        $model = $this->model("Tax");
         $data = $model->find($id);
 
         if ($data) {
@@ -26,10 +26,6 @@ class Products extends Controller {
         $errors = [];
         $errorFields = [];
 
-        if (!isset($fields->name) || empty($fields->name))
-            $errorFields[] = "name";
-        if (!isset($fields->price) || empty($fields->price))
-            $errorFields[] = "price";
         if (!isset($fields->product_type_id) || empty($fields->product_type_id))
             $errorFields[] = "product_type_id";
 
@@ -57,9 +53,8 @@ class Products extends Controller {
             exit();
         }
 
-        $model = $this->model("Product");
-        $model->name = $insertFields->name;
-        $model->price = $insertFields->price;
+        $model = $this->model("Tax");
+        $model->tax_rate = $insertFields->tax_rate ?? 0;
         $model->product_type_id = $insertFields->product_type_id;
 
         if($model->store()){
@@ -77,7 +72,7 @@ class Products extends Controller {
 
         $updateFields = json_decode($json);
 
-        $model = $this->model("Product");
+        $model = $this->model("Tax");
 
         if(!$model->find($id)){
             http_response_code(404);
@@ -86,8 +81,7 @@ class Products extends Controller {
         }
             
         $model->id = $id;
-        $model->name = $updateFields->name;
-        $model->price = $updateFields->price;
+        $model->tax_rate = $updateFields->tax_rate ?? 0;
         $model->product_type_id = $updateFields->product_type_id;
 
         if($model->update()){
@@ -100,7 +94,7 @@ class Products extends Controller {
     }
 
     public function delete($id){
-        $model = $this->model("Product");
+        $model = $this->model("Tax");
 
         if(!$model->find($id)){
             http_response_code(404);
