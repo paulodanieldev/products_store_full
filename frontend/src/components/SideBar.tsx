@@ -8,12 +8,12 @@ export default function SideBar():JSX.Element  {
     [
         {
             label: "Dashboard",
-            selected: false,
+            selected: true,
             href: "/"
         },
         {
             label: "Products",
-            selected: true,
+            selected: false,
             href: "/products"
         },
         {
