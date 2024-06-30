@@ -28,7 +28,7 @@ export default function ProductTypeForm({
   return (
     <Card className="w-[350px]">
       <CardHeader>
-        <CardTitle>Create product type</CardTitle>
+        <CardTitle>{ productType?.id ? "Update" : "Create" } Product Type</CardTitle>
       </CardHeader>
       <CardContent>
         <form>
