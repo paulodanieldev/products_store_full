@@ -8,7 +8,7 @@ class ProductType {
     public $name;
 
     public function getAll() {
-        $sql = " SELECT * FROM tb_product_types ";
+        $sql = " SELECT * FROM tb_product_types ORDER BY id DESC";
 
         $stmt = Model::getConn()->prepare($sql);
         $stmt->execute();
