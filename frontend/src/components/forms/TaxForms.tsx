@@ -17,55 +17,37 @@ import {
 } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Product } from "@/types/Products"
+import { Tax } from "@/types/Taxes"
 import { ProductTypes } from "@/types/ProductTypes"
 
-interface ProductFormProps {
-    product: Partial<Product> | null;
+interface TaxFormProps {
+    tax: Partial<Tax> | null;
     productTypes?: ProductTypes[];
     onSave: () => void;
     onCancel: () => void;
-    onChange: (product: Product) => void;
+    onChange: (product: Tax) => void;
 }
 
-export default function ProductForm({
-    product,
+export default function TaxForm({
+    tax,
     productTypes,
     onSave,
     onCancel,
     onChange,
-}: ProductFormProps) {
+}: TaxFormProps) {
   return (
     <Card className="w-[100%]">
       <CardHeader>
-        <CardTitle>{ product?.id ? "Update" : "Create" } Product</CardTitle>
+        <CardTitle>{ tax?.id ? "Update" : "Create" } Tax</CardTitle>
       </CardHeader>
       <CardContent>
         <form>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">Name</Label>
-              <Input 
-                id="name" 
-                placeholder="Name of your project" 
-                onChange={(e) => onChange({ ...product, name: e.target.value })}
-                value={product?.name}
-                />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="price">Price</Label>
-              <Input 
-                id="price" 
-                placeholder="Price of your product" 
-                onChange={(e) => onChange({ ...product, price: e.target.value})}
-                value={product?.price}
-                />
-            </div>
-            <div className="flex flex-col space-y-1.5">
               <Label htmlFor="product-type">Product Type</Label>
               <Select
-                onValueChange={(value) => onChange({ ...product, product_type_id: parseInt(value) })}
-                value={product?.product_type_id?.toString()}
+                onValueChange={(value) => onChange({ ...tax, product_type_id: parseInt(value) })}
+                value={tax?.product_type_id?.toString()}
               >
                 <SelectTrigger id="product-type">
                   <SelectValue placeholder="Select" />
@@ -76,6 +58,15 @@ export default function ProductForm({
                   ))}
                 </SelectContent>
               </Select>
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="price">Price</Label>
+              <Input 
+                id="price" 
+                placeholder="Price of your product" 
+                onChange={(e) => onChange({ ...tax, tax_rate: e.target.value})}
+                value={tax?.tax_rate}
+                />
             </div>
           </div>
         </form>

@@ -26,7 +26,7 @@ export default function ProductTypeForm({
     onChange,
 }: ProductTypeFormProps) {
   return (
-    <Card className="w-[350px]">
+    <Card className="w-[100%]">
       <CardHeader>
         <CardTitle>{ productType?.id ? "Update" : "Create" } Product Type</CardTitle>
       </CardHeader>
