@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import ProductForm from "@/components/forms/ProductForms";
 import { Button } from "@/components/ui/button";
 import { ProductTypes } from "@/types/ProductTypes";
+import { formatCurrency } from "@/lib/utils";
 
 export default function ProductPage() {
   const [products, setProducts] = useState<Product[]>();
@@ -59,7 +60,7 @@ export default function ProductPage() {
                     <td className="py-2 px-4 border-b text-left">{product.id}</td>
                     <td className="py-2 px-4 border-b text-left">{product.name}</td>
                     <td className="py-2 px-4 border-b text-left">{productTypes?.find(pt => pt.id === product.product_type_id)?.name}</td>
-                    <td className="py-2 px-4 border-b text-left">{product.price}</td>
+                    <td className="py-2 px-4 border-b text-left">{formatCurrency(product.price)}</td>
                     <td className="py-2 px-4 border-b text-right">
                       <button onClick={() => setProduct(product)} className="text-blue-500 hover:underline mr-4">
                         Edit

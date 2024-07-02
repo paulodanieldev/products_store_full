@@ -42,7 +42,10 @@ class Router {
 
         switch ($this->method) {
             case "GET":
-                if (isset($url[2])) {
+                if (isset($url[2]) && isset($url[3])) {
+                    $this->controllerMethod = $url[3];
+                    $this->params = [$url[2]];
+                } else if (isset($url[2])) {
                     $this->controllerMethod = "find";
                     $this->params = [$url[2]];
                 } else {
@@ -51,12 +54,19 @@ class Router {
                 break;
 
             case "POST":
-                $this->controllerMethod = "store";
+                if (isset($url[2])) {
+                    $this->controllerMethod = $url[2];
+                } else {
+                    $this->controllerMethod = "store";
+                }
                 break;
 
             case "PUT":
-                $this->controllerMethod = "update";
-                if (isset($url[2]) && is_numeric($url[2])) {
+                if (isset($url[2]) && isset($url[3])) {
+                    $this->controllerMethod = $url[3];
+                    $this->params = [$url[2]];
+                } else if (isset($url[2]) && is_numeric($url[2])) {
+                    $this->controllerMethod = "update";
                     $this->params = [$url[2]];
                 } else {
                     http_response_code(400);

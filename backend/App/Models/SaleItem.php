@@ -26,6 +26,29 @@ class SaleItem {
         }
     }
 
+    public function getBySale($sale_id) {
+        $sql = " SELECT * FROM tb_sale_items WHERE sale_id = ? ";
+
+        $stmt = Model::getConn()->prepare($sql);
+        $stmt->bindValue(1, $sale_id);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $result = $stmt->fetchAll(\PDO::FETCH_OBJ);
+
+            foreach($result as $item){
+                $tax = $item->tax ?? 0;
+                $price = $item->price ?? 0;
+                $quantity = $item->quantity ?? 0;
+                $item->total = ($price * $quantity) + $tax;
+            }
+
+            return $result;
+        } else {
+            return [];
+        }
+    }
+
     public function find($id) {
         $sql = " SELECT * FROM tb_sale_items WHERE id = ? ";
 
@@ -87,6 +110,15 @@ class SaleItem {
 
         $stmt = Model::getConn()->prepare($sql);
         $stmt->bindValue(1, $this->id);
+
+        return $stmt->execute();
+    }
+
+    public function deleteBySale($sale_id) {
+        $sql = " DELETE FROM tb_sale_items WHERE sale_id = ? ";
+
+        $stmt = Model::getConn()->prepare($sql);
+        $stmt->bindValue(1, $sale_id);
 
         return $stmt->execute();
     }

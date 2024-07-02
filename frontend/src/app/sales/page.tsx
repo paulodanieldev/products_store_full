@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Sales } from "@/types/Sales";
 import SaleForm from "@/components/forms/SalesForms";
 import { Button } from "@/components/ui/button";
+import { formatDateTime } from "@/lib/utils";
 
 export default function SalePage() {
   const [sales, setSales] = useState<Sales[]>();
@@ -26,13 +27,11 @@ export default function SalePage() {
 
   return (
     <ScrollArea className="desktop-body flex w-full h-full py-16 mx-auto items-center justify-center overflow-auto pl-[230px] pr-[50px]">
-      <h1 className="text-4xl font-bold text-center mb-8">Product Types</h1>
+      <h1 className="text-4xl font-bold text-center mb-8">Sales</h1>
       { sale ? (
         <SaleForm 
           sale={sale || {}}
-          onSave={handleSave}
-          onCancel={() => setSale(null)}
-          onChange={setSale}
+          onBack={() => setSale(null)}
         />
       ):(
         <>
@@ -54,7 +53,7 @@ export default function SalePage() {
                 {sales && sales.map((sale: Sales) => (
                   <tr key={sale.id}>
                     <td className="py-2 px-4 border-b text-left">{sale.id}</td>
-                    <td className="py-2 px-4 border-b text-left">{sale.sale_date}</td>
+                    <td className="py-2 px-4 border-b text-left">{formatDateTime(sale.sale_date)}</td>
                     <td className="py-2 px-4 border-b text-left">{sale.total}</td>
                     <td className="py-2 px-4 border-b text-left">{sale.total_tax}</td>
                     <td className="py-2 px-4 border-b text-right">
