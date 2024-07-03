@@ -38,9 +38,9 @@ export default function ProductTypeForm({
               <Input 
                 id="name" 
                 placeholder="Name of your project" 
-                onChange={(e) => onChange({ ...productType, name: e.target.value })}
+                onChange={(e) => onChange({ ...productType, name: e.target.value, id: productType?.id || 0 })}
                 value={productType?.name}
-                />
+              />
             </div>
           </div>
         </form>

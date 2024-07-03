@@ -1,0 +1,65 @@
+{
+  "pages": {
+    "/_not-found/page": [
+      "static/chunks/webpack-8f7c4246348aad30.js",
+      "static/chunks/fd9d1056-51face16839d2cb0.js",
+      "static/chunks/23-b175923d0af2b6c7.js",
+      "static/chunks/main-app-cab5600d7b1b778d.js",
+      "static/chunks/app/_not-found/page-1cf770a61245fdcb.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack-8f7c4246348aad30.js",
+      "static/chunks/fd9d1056-51face16839d2cb0.js",
+      "static/chunks/23-b175923d0af2b6c7.js",
+      "static/chunks/main-app-cab5600d7b1b778d.js",
+      "static/css/1658fbc6eaa7ad08.css",
+      "static/chunks/881-c064a5b36db724ac.js",
+      "static/chunks/app/layout-7656db55afebaab7.js"
+    ],
+    "/page": [
+      "static/chunks/webpack-8f7c4246348aad30.js",
+      "static/chunks/fd9d1056-51face16839d2cb0.js",
+      "static/chunks/23-b175923d0af2b6c7.js",
+      "static/chunks/main-app-cab5600d7b1b778d.js",
+      "static/chunks/app/page-ffc06cd4473239c6.js"
+    ],
+    "/sales/page": [
+      "static/chunks/webpack-8f7c4246348aad30.js",
+      "static/chunks/fd9d1056-51face16839d2cb0.js",
+      "static/chunks/23-b175923d0af2b6c7.js",
+      "static/chunks/main-app-cab5600d7b1b778d.js",
+      "static/chunks/707-af1ca775046d4f23.js",
+      "static/chunks/833-6c52b51a28fe202f.js",
+      "static/chunks/24-e0eca2041c74655d.js",
+      "static/chunks/app/sales/page-ab3a65da063249eb.js"
+    ],
+    "/product-types/page": [
+      "static/chunks/webpack-8f7c4246348aad30.js",
+      "static/chunks/fd9d1056-51face16839d2cb0.js",
+      "static/chunks/23-b175923d0af2b6c7.js",
+      "static/chunks/main-app-cab5600d7b1b778d.js",
+      "static/chunks/707-af1ca775046d4f23.js",
+      "static/chunks/app/product-types/page-713a3dbf7049cdf8.js"
+    ],
+    "/taxes/page": [
+      "static/chunks/webpack-8f7c4246348aad30.js",
+      "static/chunks/fd9d1056-51face16839d2cb0.js",
+      "static/chunks/23-b175923d0af2b6c7.js",
+      "static/chunks/main-app-cab5600d7b1b778d.js",
+      "static/chunks/707-af1ca775046d4f23.js",
+      "static/chunks/833-6c52b51a28fe202f.js",
+      "static/chunks/24-e0eca2041c74655d.js",
+      "static/chunks/app/taxes/page-23419287ea9aa167.js"
+    ],
+    "/products/page": [
+      "static/chunks/webpack-8f7c4246348aad30.js",
+      "static/chunks/fd9d1056-51face16839d2cb0.js",
+      "static/chunks/23-b175923d0af2b6c7.js",
+      "static/chunks/main-app-cab5600d7b1b778d.js",
+      "static/chunks/707-af1ca775046d4f23.js",
+      "static/chunks/833-6c52b51a28fe202f.js",
+      "static/chunks/24-e0eca2041c74655d.js",
+      "static/chunks/app/products/page-dbebbbc378c89676.js"
+    ]
+  }
+}

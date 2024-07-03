@@ -85,19 +85,6 @@ export default function SalePage() {
     </ScrollArea>
   );
 
-  // async function getAllSales() {
-  //   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sales`)
-
-  //   if (!response.ok) {
-  //     setError(new Error('Failed to fetch'));
-  //     return;
-  //   }
-
-  //   const data = await response.json();
-  //   setSales(data);
-  //   setLoading(false);
-  // }
-
   async function handleDelete(id: number) {
     if (confirm("Are you sure you want to delete this item?")) {
       await deleteSale(id);

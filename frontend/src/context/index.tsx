@@ -8,14 +8,14 @@ import {createContext,useContext, useEffect, useState} from 'react';
 interface AppContextType {
     getData: (endpoint: string) => Promise<any>;
     postData: (endpoint: string, data: any) => Promise<any>;
-    createProduct: (product: Partial<Product> | null) => Promise<void>;
-    updateProduct: (product: Partial<Product> | null) => Promise<void>;
+    createProduct: (product: Partial<Product>) => Promise<void>;
+    updateProduct: (product: Partial<Product>) => Promise<void>;
     deleteProduct: (id: number) => Promise<void>;
-    createProductType: (productType: Partial<ProductTypes> | null) => Promise<void>;
-    updateProductType: (productType: Partial<ProductTypes> | null) => Promise<void>;
+    createProductType: (productType: Partial<ProductTypes>) => Promise<void>;
+    updateProductType: (productType: Partial<ProductTypes>) => Promise<void>;
     deleteProductType: (id: number) => Promise<void>;
-    createTax: (tax: Partial<Tax> | null) => Promise<void>;
-    updateTax: (tax: Partial<Tax> | null) => Promise<void>;
+    createTax: (tax: Partial<Tax>) => Promise<void>;
+    updateTax: (tax: Partial<Tax>) => Promise<void>;
     deleteTax: (id: number) => Promise<void>;
     deleteSale: (id: number) => Promise<void>;
     dataProduct: Product[];
@@ -117,7 +117,7 @@ export function AppWrapper({children}: {children: React.ReactNode}) {
 
     // PRODUCT FUNCTIONS - BEGIN ------------------------------------------
 
-    async function createProduct(product: Product) {
+    async function createProduct(product: Partial<Product>): Promise<void>{
         try {
             setLoading(true);
             const newProduct = await postData('products', product);
@@ -132,10 +132,10 @@ export function AppWrapper({children}: {children: React.ReactNode}) {
         }
     }
 
-    async function updateProduct(product: Product) {
+    async function updateProduct(product: Partial<Product>) {
         try {
             setLoading(true);
-            const updatedProduct = await putData('products', product, product.id);
+            const updatedProduct = await putData('products', product, product.id as number);
             const index = dataProduct.findIndex((p) => p.id === product.id);
             const updatedProducts = [...dataProduct];
             updatedProducts[index] = updatedProduct;
@@ -170,7 +170,7 @@ export function AppWrapper({children}: {children: React.ReactNode}) {
 
     // PRODUCT TYPE FUNCTIONS - BEGIN -------------------------------------
 
-    async function createProductType(productType: ProductTypes) {
+    async function createProductType(productType: Partial<ProductTypes>) {
         try {
             setLoading(true);
             const newProductType = await postData('productTypes', productType);
@@ -185,10 +185,10 @@ export function AppWrapper({children}: {children: React.ReactNode}) {
         }
     }
 
-    async function updateProductType(productType: ProductTypes) {
+    async function updateProductType(productType: Partial<ProductTypes>) {
         try {
             setLoading(true);
-            const updatedProductType = await putData('productTypes', productType, productType.id);
+            const updatedProductType = await putData('productTypes', productType, productType.id as number);
             const index = dataProductType.findIndex((pt) => pt.id === productType.id);
             const updatedProductTypes = [...dataProductType];
             updatedProductTypes[index] = updatedProductType;
@@ -223,7 +223,7 @@ export function AppWrapper({children}: {children: React.ReactNode}) {
 
     // TAX FUNCTIONS - BEGIN ----------------------------------------
 
-    async function createTax(tax: Tax) {
+    async function createTax(tax: Partial<Tax>) {
         try {
             setLoading(true);
             const newTax = await postData('taxes', tax);
@@ -238,10 +238,10 @@ export function AppWrapper({children}: {children: React.ReactNode}) {
         }
     }
 
-    async function updateTax(tax: Tax) {
+    async function updateTax(tax: Partial<Tax>) {
         try {
             setLoading(true);
-            const updatedTax = await putData('taxes', tax, tax.id);
+            const updatedTax = await putData('taxes', tax, tax.id as number);
             const index = dataTax.findIndex((t) => t.id === tax.id);
             const updatedTaxes = [...dataTax];
             updatedTaxes[index] = updatedTax;

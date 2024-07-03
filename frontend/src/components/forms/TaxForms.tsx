@@ -21,7 +21,7 @@ import { Tax } from "@/types/Taxes"
 import { ProductTypes } from "@/types/ProductTypes"
 
 interface TaxFormProps {
-    tax: Partial<Tax> | null;
+    tax: any;
     productTypes?: ProductTypes[];
     onSave: () => void;
     onCancel: () => void;

@@ -467,6 +467,30 @@
 					"response": []
 				},
 				{
+					"name": "getSaleItems",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8101/sales/1/getSaleItems",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8101",
+							"path": [
+								"sales",
+								"1",
+								"getSaleItems"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "find",
 					"request": {
 						"auth": {
@@ -515,6 +539,103 @@
 							"port": "8101",
 							"path": [
 								"sales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "calculateTax",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\": 5,\n    \"total\": 20\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8101/sales/calculateTax",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8101",
+							"path": [
+								"sales",
+								"calculateTax"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createSalesItems",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"total\": 20,\n    \"total_tax\": 0.92,\n    \"items\": [\n        {\n            \"product_id\": 5,\n            \"quantity\": 1,\n            \"price\": 20.00,\n            \"total\": 20.00,\n            \"tax\": 0.92\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8101/sales/createSalesItems",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8101",
+							"path": [
+								"sales",
+								"createSalesItems"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateSalesItems",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"total\": 21.96,\n    \"total_tax\": 0.96,\n    \"items\": [\n        {\n            \"product_id\": 5,\n            \"quantity\": 1,\n            \"price\": 21.00,\n            \"total\": 21.96,\n            \"tax\": 0.96\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8101/sales/8/updateSalesItems",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8101",
+							"path": [
+								"sales",
+								"8",
+								"updateSalesItems"
 							]
 						}
 					},

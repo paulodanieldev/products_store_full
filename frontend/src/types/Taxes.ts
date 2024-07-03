@@ -1,6 +1,6 @@
 export interface Tax {
     id: number;
-    product_type_id: number;
+    product_type_id: any;
     tax_rate: number;
 }
 

@@ -16,4 +16,8 @@ bash:
 
 .PHONY: dump
 dump:
-	docker-compose exec db pg_dump -U postgres -d postgres > dump.sql
+	docker-compose exec postgres pg_dump -U softexpert -d db_softexpert_products > dump.sql
+
+.PHONY: restore
+restore:
+	docker-compose exec -T postgres psql -U softexpert -d db_softexpert_products < dump.sql

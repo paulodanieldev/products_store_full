@@ -17,7 +17,7 @@ export default function ProductPage() {
     error
   } = useAppContext();
 
-  const [tax, setTax] = useState<Partial<Tax> | null>(null);
+  const [tax, setTax] = useState<any>(null);
 
   if (loading) {
     return <p>Loading...</p>;
