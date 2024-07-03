@@ -6,16 +6,24 @@ import { Sales } from "@/types/Sales";
 import SaleForm from "@/components/forms/SalesForms";
 import { Button } from "@/components/ui/button";
 import { formatDateTime } from "@/lib/utils";
+import { useAppContext } from "@/context";
 
 export default function SalePage() {
-  const [sales, setSales] = useState<Sales[]>();
-  const [sale, setSale] = useState<Partial<Sales> | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<any>(null);
+  const {
+    dataSales,
+    deleteSale,
+    loading, 
+    error
+  } = useAppContext();
 
-  useEffect(() => {
-    getAllSales();
-  }, []);
+  // const [sales, setSales] = useState<Sales[]>();
+  const [sale, setSale] = useState<Partial<Sales> | null>(null);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState<any>(null);
+
+  // useEffect(() => {
+  //   getAllSales();
+  // }, []);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -50,7 +58,7 @@ export default function SalePage() {
                 </tr>
               </thead>
               <tbody>
-                {sales && sales.map((sale: Sales) => (
+                {dataSales && dataSales.map((sale: Sales) => (
                   <tr key={sale.id}>
                     <td className="py-2 px-4 border-b text-left">{sale.id}</td>
                     <td className="py-2 px-4 border-b text-left">{formatDateTime(sale.sale_date)}</td>
@@ -77,69 +85,22 @@ export default function SalePage() {
     </ScrollArea>
   );
 
-  async function getAllSales() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sales`)
+  // async function getAllSales() {
+  //   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sales`)
 
-    if (!response.ok) {
-      setError(new Error('Failed to fetch'));
-      return;
-    }
+  //   if (!response.ok) {
+  //     setError(new Error('Failed to fetch'));
+  //     return;
+  //   }
 
-    const data = await response.json();
-    setSales(data);
-    setLoading(false);
-  }
-
-  async function createSale() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sales`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(sale),
-    });
-
-    if (!response.ok) {
-      setError(new Error('Failed to create'));
-      return;
-    }
-  }
-
-  async function updateSale() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sales/${sale?.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(sale),
-    });
-
-    if (!response.ok) {
-      setError(new Error('Failed to update'));
-      return;
-    }
-  }
-
-  async function handleSave() {
-    if (sale?.id) {
-      await updateSale();
-    } else {
-      await createSale();
-    }
-    await getAllSales();
-    setSale(null);
-  }
+  //   const data = await response.json();
+  //   setSales(data);
+  //   setLoading(false);
+  // }
 
   async function handleDelete(id: number) {
     if (confirm("Are you sure you want to delete this item?")) {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sales/${id}`, {
-        method: 'DELETE',
-      })
-      if (!response.ok) {
-        setError(new Error('Failed to delete'));
-        return;
-      }
-      getAllSales();
+      await deleteSale(id);
     }
   }
 }

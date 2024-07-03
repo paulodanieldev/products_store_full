@@ -12,7 +12,7 @@ class SaleItem {
     public $tax;
 
     public function getAll() {
-        $sql = " SELECT * FROM tb_sale_items ORDER BY id DESC";
+        $sql = " SELECT * FROM tb_sale_items ORDER BY id ASC";
 
         $stmt = Model::getConn()->prepare($sql);
         $stmt->execute();

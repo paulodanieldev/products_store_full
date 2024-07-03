@@ -1,19 +1,22 @@
 'use client';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ProductTypes } from "@/types/ProductTypes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ProductTypeForm from "@/components/forms/ProductTypesForms";
 import { Button } from "@/components/ui/button";
+import { useAppContext } from "@/context";
 
 export default function ProductTypePage() {
-  const [productTypes, setProductTypes] = useState<ProductTypes[]>();
-  const [productType, setProductType] = useState<Partial<ProductTypes> | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<any>(null);
+  const {
+    dataProductType, 
+    createProductType,
+    updateProductType,
+    deleteProductType,
+    loading, 
+    error
+  } = useAppContext();
 
-  useEffect(() => {
-    getAllProductTypes();
-  }, []);
+  const [productType, setProductType] = useState<Partial<ProductTypes> | null>(null);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -48,7 +51,7 @@ export default function ProductTypePage() {
                 </tr>
               </thead>
               <tbody>
-                {productTypes && productTypes.map((productType: ProductTypes) => (
+                {dataProductType && dataProductType.map((productType: ProductTypes) => (
                   <tr key={productType.id}>
                     <td className="py-2 px-4 border-b text-left">{productType.id}</td>
                     <td className="py-2 px-4 border-b text-left">{productType.name}</td>
@@ -73,69 +76,18 @@ export default function ProductTypePage() {
     </ScrollArea>
   );
 
-  async function getAllProductTypes() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/productTypes`)
-
-    if (!response.ok) {
-      setError(new Error('Failed to fetch'));
-      return;
-    }
-
-    const data = await response.json();
-    setProductTypes(data);
-    setLoading(false);
-  }
-
-  async function createProductType() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/productTypes`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(productType),
-    });
-
-    if (!response.ok) {
-      setError(new Error('Failed to create'));
-      return;
-    }
-  }
-
-  async function updateProductType() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/productTypes/${productType?.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(productType),
-    });
-
-    if (!response.ok) {
-      setError(new Error('Failed to update'));
-      return;
-    }
-  }
-
   async function handleSave() {
     if (productType?.id) {
-      await updateProductType();
+      await updateProductType(productType);
     } else {
-      await createProductType();
+      await createProductType(productType);
     }
-    await getAllProductTypes();
     setProductType(null);
   }
 
   async function handleDelete(id: number) {
     if (confirm("Are you sure you want to delete this item?")) {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/productTypes/${id}`, {
-        method: 'DELETE',
-      })
-      if (!response.ok) {
-        setError(new Error('Failed to delete'));
-        return;
-      }
-      getAllProductTypes();
+      await deleteProductType(id);
     }
   }
 }

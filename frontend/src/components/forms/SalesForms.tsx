@@ -228,7 +228,7 @@ export default function SaleForm({
       </CardHeader>
       <CardContent>
         <div>
-          <div className="grid grid-cols-5 gap-4">
+          <div className="grid grid-cols-6 gap-4">
             <div className="space-y-2">
               <Label htmlFor="product-type">Product</Label>
               <Select

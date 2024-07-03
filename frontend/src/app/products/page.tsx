@@ -1,23 +1,24 @@
 'use client';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Product } from "@/types/Products";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ProductForm from "@/components/forms/ProductForms";
 import { Button } from "@/components/ui/button";
-import { ProductTypes } from "@/types/ProductTypes";
 import { formatCurrency } from "@/lib/utils";
+import { useAppContext } from "@/context";
 
 export default function ProductPage() {
-  const [products, setProducts] = useState<Product[]>();
-  const [product, setProduct] = useState<Partial<Product> | null>(null);
-  const [productTypes, setProductTypes] = useState<ProductTypes[]>();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<any>(null);
+  const {
+    dataProduct, 
+    dataProductType, 
+    createProduct,
+    updateProduct,
+    deleteProduct,
+    loading, 
+    error
+  } = useAppContext();
 
-  useEffect(() => {
-    getAllProductTypes();
-    getAllProducts();
-  }, []);
+  const [product, setProduct] = useState<Partial<Product> | null>(null);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -33,7 +34,7 @@ export default function ProductPage() {
       { product ? (
         <ProductForm 
           product={product || {}}
-          productTypes={productTypes}
+          productTypes={dataProductType}
           onSave={handleSave}
           onCancel={() => setProduct(null)}
           onChange={setProduct}
@@ -55,11 +56,11 @@ export default function ProductPage() {
                 </tr>
               </thead>
               <tbody>
-                {products && products.map((product: Product) => (
+                {dataProduct && dataProduct.map((product: Product) => (
                   <tr key={product.id}>
                     <td className="py-2 px-4 border-b text-left">{product.id}</td>
                     <td className="py-2 px-4 border-b text-left">{product.name}</td>
-                    <td className="py-2 px-4 border-b text-left">{productTypes?.find(pt => pt.id === product.product_type_id)?.name}</td>
+                    <td className="py-2 px-4 border-b text-left">{dataProductType?.find(pt => pt.id === product.product_type_id)?.name}</td>
                     <td className="py-2 px-4 border-b text-left">{formatCurrency(product.price)}</td>
                     <td className="py-2 px-4 border-b text-right">
                       <button onClick={() => setProduct(product)} className="text-blue-500 hover:underline mr-4">
@@ -82,82 +83,18 @@ export default function ProductPage() {
     </ScrollArea>
   );
 
-  async function getAllProducts() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`)
-
-    if (!response.ok) {
-      setError(new Error('Failed to fetch'));
-      return;
-    }
-
-    const data = await response.json();
-    setProducts(data);
-    setLoading(false);
-  }
-
-  async function getAllProductTypes() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/productTypes`)
-
-    if (!response.ok) {
-      setError(new Error('Failed to fetch'));
-      return;
-    }
-
-    const data = await response.json();
-    setProductTypes(data);
-    setLoading(false);
-  }
-
-  async function createProduct() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(product),
-    });
-
-    if (!response.ok) {
-      setError(new Error('Failed to create'));
-      return;
-    }
-  }
-
-  async function updateProduct() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${product?.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(product),
-    });
-
-    if (!response.ok) {
-      setError(new Error('Failed to update'));
-      return;
-    }
-  }
-
   async function handleSave() {
     if (product?.id) {
-      await updateProduct();
+      await updateProduct(product);
     } else {
-      await createProduct();
+      await createProduct(product);
     }
-    await getAllProducts();
     setProduct(null);
   }
 
   async function handleDelete(id: number) {
     if (confirm("Are you sure you want to delete this item?")) {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`, {
-        method: 'DELETE',
-      })
-      if (!response.ok) {
-        setError(new Error('Failed to delete'));
-        return;
-      }
-      getAllProducts();
+      await deleteProduct(id);
     }
   }
 }
