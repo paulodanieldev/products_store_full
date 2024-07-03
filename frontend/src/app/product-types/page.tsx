@@ -80,7 +80,7 @@ export default function ProductTypePage() {
     if (productType?.id) {
       await updateProductType(productType);
     } else {
-      await createProductType(productType);
+      await createProductType(productType as ProductTypes);
     }
     setProductType(null);
   }

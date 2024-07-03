@@ -61,7 +61,7 @@ export default function ProductPage() {
                     <td className="py-2 px-4 border-b text-left">{product.id}</td>
                     <td className="py-2 px-4 border-b text-left">{product.name}</td>
                     <td className="py-2 px-4 border-b text-left">{dataProductType?.find(pt => pt.id === product.product_type_id)?.name}</td>
-                    <td className="py-2 px-4 border-b text-left">{formatCurrency(product.price)}</td>
+                    <td className="py-2 px-4 border-b text-left">{formatCurrency(parseFloat(product.price))}</td>
                     <td className="py-2 px-4 border-b text-right">
                       <button onClick={() => setProduct(product)} className="text-blue-500 hover:underline mr-4">
                         Edit
@@ -87,7 +87,7 @@ export default function ProductPage() {
     if (product?.id) {
       await updateProduct(product);
     } else {
-      await createProduct(product);
+      await createProduct(product as Product);
     }
     setProduct(null);
   }

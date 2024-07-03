@@ -25,7 +25,7 @@ interface ProductFormProps {
     productTypes?: ProductTypes[];
     onSave: () => void;
     onCancel: () => void;
-    onChange: (product: Product) => void;
+    onChange: (product: Partial<Product>) => void;
 }
 
 export default function ProductForm({
@@ -64,7 +64,7 @@ export default function ProductForm({
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="product-type">Product Type</Label>
               <Select
-                onValueChange={(value) => onChange({ ...product, product_type_id: parseInt(value) })}
+                onValueChange={(value) => onChange({ ...product, product_type_id: parseInt(value, 10) })}
                 value={product?.product_type_id?.toString()}
               >
                 <SelectTrigger id="product-type">
