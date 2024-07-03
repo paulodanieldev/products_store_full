@@ -9,7 +9,7 @@ class Tax {
     public $tax_rate;
 
     public function getAll() {
-        $sql = " SELECT * FROM tb_taxes ";
+        $sql = " SELECT * FROM tb_taxes ORDER BY id ASC";
 
         $stmt = Model::getConn()->prepare($sql);
         $stmt->execute();
@@ -41,6 +41,30 @@ class Tax {
         } else {
             return false;
         }
+    }
+
+    public function findByProductType($product_type_id) {
+        $sql = " SELECT * FROM tb_taxes WHERE product_type_id = ? ";
+
+        $stmt = Model::getConn()->prepare($sql);
+        $stmt->bindValue(1, $product_type_id);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $result = $stmt->fetch(\PDO::FETCH_OBJ);
+
+            $this->id = $result->id;
+            $this->tax_rate = $result->tax_rate;
+            $this->product_type_id = $result->product_type_id;
+
+            
+        } else {
+            $this->id = 0;
+            $this->tax_rate = 0;
+            $this->product_type_id = 0;
+        }
+
+        return $this;
     }
 
     public function store() {
