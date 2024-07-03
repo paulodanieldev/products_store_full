@@ -1,5 +1,8 @@
 # Projeto Softexpert Products
 
+## video explicativo
+https://www.loom.com/share/e707a33f26254b2784c9defddb77ce36?sid=023a2f42-99cb-44d4-923a-a056ad2c3a9b
+
 ## Backend
 
 ### Pré-requisitos
@@ -12,7 +15,7 @@
   Crie um arquivo `.env` na raiz do projeto e defina as seguintes variáveis:
 
   - APP_PORT: Porta onde o Docker vai rodar  
-    `APP_PORT=3000`
+    `APP_PORT=8000`
 
   - Credenciais do banco de dados: Defina as credenciais para o banco de dados  
     `DB_HOST=db`  
@@ -37,7 +40,7 @@
 
 - **Restaurar o banco de dados**  
   Execute o comando abaixo para restaurar o banco de dados:  
-  `make dump`
+  `make restore`
 
 - **Parar o Docker**  
   Para parar o Docker, execute:  
